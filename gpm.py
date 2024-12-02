@@ -30,16 +30,21 @@ def locate_gpm(gpm_path, target_path):
     # Convert BGR to RGB for display
     target_image_rgb = cv2.cvtColor(target_image, cv2.COLOR_BGR2RGB)
 
-    # Display the images
+    # Display the images with a confidence score condition
     plt.figure(figsize=(10, 5))
     plt.imshow(target_image_rgb)
-    plt.title(f'Target Image with Detected GPM\nConfidence Score: {max_val:.2f}')
+    
+    # Prepare title with condition for confidence score
+    title_text = f'Target Image with Detected GPM\nConfidence Score: {max_val:.2f}'
+    if max_val < 0.7:
+        title_text += ' (NG)'  # Append "NG" if the confidence score is below 0.7
+    
+    plt.title(title_text)
     plt.axis('off')
     plt.show()
 
 # Example Usage:
-gpm_image_path = 'rtemp.jpg'  # Provide the GPM image path
-target_image_path = 'right.jpg'  # Provide the target image path
+gpm_image_path = 'ltemp.jpg'  # Provide the GPM image path
+target_image_path = 'failedleft.jpg'  # Provide the target image path
 
 locate_gpm(gpm_image_path, target_image_path)
-

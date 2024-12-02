@@ -33,7 +33,7 @@ root = tk.Tk()
 root.title("iSense V1.0")
 
 # Load the initial image
-initial_image_path = "left.jpg"  # Path to your initial image
+initial_image_path = "failedleft.jpg"  # Path to your initial image
 if os.path.exists(initial_image_path):
     initial_image = Image.open(initial_image_path)
     initial_image = initial_image.resize((600, 400), Image.LANCZOS)  # Resize image to fit the window

@@ -36,7 +36,7 @@ def locate_gpm(gpm_path, target_path):
     
     # Prepare title with condition for confidence score
     title_text = f'Target Image with Detected GPM\nConfidence Score: {max_val:.2f}'
-    if max_val < 0.7:
+    if max_val < 0.6:
         title_text += ' (NG)'  # Append "NG" if the confidence score is below 0.7
     
     plt.title(title_text)
@@ -45,6 +45,6 @@ def locate_gpm(gpm_path, target_path):
 
 # Example Usage:
 gpm_image_path = 'ltemp.jpg'  # Provide the GPM image path
-target_image_path = 'failedleft.jpg'  # Provide the target image path
+target_image_path = 'NG/2/5.png'  # Provide the target image path
 
 locate_gpm(gpm_image_path, target_image_path)

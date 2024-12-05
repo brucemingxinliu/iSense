@@ -7,7 +7,7 @@ def execute_gpm_script():
     """Execute gpm.py to generate the output image."""
     # Execute the gpm.py script
     try:
-        subprocess.run(["python", "runtime_find.py"], check=True)  # Adjust the command if needed
+        subprocess.run(["python", "gpm.py"], check=True)  # Adjust the command if needed
         # After execution, display the GPM output image
         display_gpm_image()
     except subprocess.CalledProcessError as e:
@@ -33,7 +33,7 @@ root = tk.Tk()
 root.title("iSense V1.0")
 
 # Load the initial image
-initial_image_path = "failedleft.jpg"  # Path to your initial image
+initial_image_path = "left.jpg"  # Path to your initial image
 if os.path.exists(initial_image_path):
     initial_image = Image.open(initial_image_path)
     initial_image = initial_image.resize((600, 400), Image.LANCZOS)  # Resize image to fit the window

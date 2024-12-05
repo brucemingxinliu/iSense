@@ -7,7 +7,7 @@ def execute_gpm_script():
     """Execute gpm.py to generate the output image."""
     # Execute the gpm.py script
     try:
-        subprocess.run(["python", "gpm.py"], check=True)  # Adjust the command if needed
+        subprocess.run(["python", "match.py"], check=True)  # Adjust the command if needed
         # After execution, display the GPM output image
         display_gpm_image()
     except subprocess.CalledProcessError as e:

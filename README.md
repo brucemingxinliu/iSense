@@ -14,5 +14,5 @@ Numpy
 graph TD;
     A[GUI.py] --> B[left_match.py]
     A[GUI.py] --> C[right_match.py]
-    B[left_match.py] --> D[leftres.JPG]
+    B[left_match.py] --> D[![left_res](leftres.JPG)]
 ```  

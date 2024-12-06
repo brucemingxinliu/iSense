@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 
 # Load the main image
-main_img = cv2.imread('left.jpg', 0)
+main_img = cv2.imread('templates/right.jpg', 0)
 
 # Load template images for each area
-template1 = cv2.imread('ltemp.jpg', 0)
+template1 = cv2.imread('templates/rtemp.jpg', 0)
 
 # Initialize SIFT detector
 sift = cv2.SIFT_create()

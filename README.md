@@ -14,9 +14,6 @@ Numpy
 graph TD;
     A[GUI.py] --> B[left_match.py]
     A[GUI.py] --> C[right_match.py]
-    B[left_match.py] --> D["<img src='https://github.com/brucemingxinliu/iSense/blob/master/leftres.JPG' width='100'/>"]
-    
-    classDef img fill:#f9f,stroke:#333,stroke-width:2px;
-    
-    
+    B[left_match.py] --> D[![left_res](leftres.JPG)]
+
 ```  

@@ -14,6 +14,11 @@ Numpy
 graph TD;
     A[GUI.py] --> B[left_match.py]
     A[GUI.py] --> C[right_match.py]
-    B[left_match.py] --> D[![left_res](leftres.JPG)]
 
 ```  
+
+From each left and right match exe, a confidence score will be generated\
+Each score should be 0 to 1 and if the combined score is larger than 0.8, then the part is PASS, else is NG
+
+## Connection and Integration
+The current deployment is for TCP camera, so the run time is for RJ45 connection

@@ -12,4 +12,4 @@ Numpy
 graph TD;
     A[GUI.py] --> B[left_match.py]
     A[GUI.py] --> C[right_match.py]
-    
+'''  

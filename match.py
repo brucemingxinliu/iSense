@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Load the main image
-main_img = cv2.imread('NG/2/5.png', 0)
+main_img = cv2.imread('left.jpg', 0)
 
 # Load template images for each area
 template1 = cv2.imread('ltemp.jpg', 0)

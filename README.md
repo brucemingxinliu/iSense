@@ -14,7 +14,6 @@ Numpy
 graph TD;
     A[GUI.py] --> B[left_match.py]
     A[GUI.py] --> C[right_match.py]
-<<<<<<< HEAD
 
 ```  
 
@@ -23,8 +22,4 @@ Each score should be 0 to 1 and if the combined score is larger than 0.8, then t
 
 ## Connection and Integration
 The current deployment is for TCP camera, so the run time is for RJ45 connection
-=======
-    B[left_match.py] --> D[![leftres](https://github.com/user-attachments/assets/ce582da9-00bb-4e56-8ba0-8e3ff326eb52)]
 
-```  
->>>>>>> 1e880eecca98d6d8c2108ee9ab70f82e6a1fdf8b

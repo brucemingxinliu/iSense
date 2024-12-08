@@ -28,7 +28,7 @@ def locate_gpm_in_frame(frame, gpm_gray):
 
 def main():
     # Load the GPM image and convert it to grayscale
-    gpm_image_path = 'rtemp.jpg'  # Path to the GPM image
+    gpm_image_path = 'templates/rtemp.jpg'  # Path to the GPM image
     gpm_image = cv2.imread(gpm_image_path)
     gpm_gray = cv2.cvtColor(gpm_image, cv2.COLOR_BGR2GRAY)
 

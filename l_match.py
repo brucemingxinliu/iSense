@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
-
+import os
 # Load the main image
-main_img = cv2.imread('templates/right.jpg', 0)
+main_img = cv2.imread('templates/left.jpg', 0)
 
 # Load template images for each area
-template1 = cv2.imread('templates/rtemp.jpg', 0)
+template1 = cv2.imread('templates/ltemp.jpg', 0)
 
 # Initialize SIFT detector
 sift = cv2.SIFT_create()
@@ -40,7 +40,7 @@ def calculate_score(img_area, detected_area):
     area_score = (detected_area / img_area) if img_area > 0 else 0  # Ratio of the detected area to the template area
 
     # Combine scores; you may choose a method to combine (here we just sum them)
-    final_score = area_score*40 - 9  # Multiplying the area ratio helps to scale it
+    final_score = area_score*2 # Multiplying the area ratio helps to scale it
     return final_score
 
 
@@ -76,14 +76,20 @@ def draw_bounding_box(good_matches, keypoints_t, keypoints_main, img, template):
                             cv2.LINE_AA)  # Line type
     else:
         print(f"Not enough matches to calculate homography for this template (found: {len(good_matches)})")
+    # Save the result image
+    output_path = 'result/left_result.jpg'
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)  # Create the directory if it doesn't exist
+    cv2.imwrite(output_path, main_img)
     return img
 
 # Draw bounding boxes for each template
 main_img = draw_bounding_box(good_matches_t1, keypoints_t1, keypoints_main, main_img, template1)
 
+
+#print(f"Result image saved to {output_path}")
 # Show the result
-desired_size = (1000,800)
-resized_image = cv2.resize(main_img, desired_size)
-cv2.imshow('Detected Areas', resized_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+#desired_size = (1000,800)
+#resized_image = cv2.resize(main_img, desired_size)
+#cv2.imshow('Detected Areas', resized_image)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()

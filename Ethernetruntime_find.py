@@ -1,72 +1,68 @@
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
 import cv2
-import numpy as np
+import threading
 
-def locate_gpm_in_frame(frame, gpm_gray):
-    # Convert the frame to grayscale
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+class CameraApp:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Camera Input")
+        self.video_source = None
+        self.is_running = False
 
-    # Match the template
-    result = cv2.matchTemplate(frame_gray, gpm_gray, cv2.TM_CCOEFF_NORMED)
-    
-    # Get the maximum confidence score and its position
-    max_val = np.max(result)
-    max_loc = np.unravel_index(np.argmax(result), result.shape)
-    
-    # Set a threshold for locating GPM in the frame
-    threshold = 0.8
-    yloc, xloc = np.where(result >= threshold)
+        # Create UI elements
+        self.label = tk.Label(master, text="Enter Camera IP Address:")
+        self.label.pack(pady=10)
 
-    # Get the dimensions of the GPM template
-    h, w = gpm_gray.shape
+        self.ip_entry = tk.Entry(master)
+        self.ip_entry.pack(pady=5)
 
-    # Draw rectangles around the matched region
-    for (x, y) in zip(xloc, yloc):
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)  # Green rectangle
+        self.start_button = tk.Button(master, text="Start Camera", command=self.start_camera)
+        self.start_button.pack(pady=5)
 
-    # Return the modified frame and the max confidence score
-    return frame, max_val
+        self.stop_button = tk.Button(master, text="Stop Camera", command=self.stop_camera)
+        self.stop_button.pack(pady=5)
 
-def main():
-    # Load the GPM image and convert it to grayscale
-    gpm_image_path = 'rtemp.jpg'  # Path to the GPM image
-    gpm_image = cv2.imread(gpm_image_path)
-    gpm_gray = cv2.cvtColor(gpm_image, cv2.COLOR_BGR2GRAY)
+        self.video_label = tk.Label(master)
+        self.video_label.pack(pady=10)
 
-    # Replace the following URL with your camera's video stream URL
-    stream_url = "http://<IP_ADDRESS>/video"  # Example for HTTP. Adjust as necessary.
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)  # Handle window closing
 
-    # Open the IP camera stream
-    cap = cv2.VideoCapture(stream_url)
+    def start_camera(self):
+        ip_address = self.ip_entry.get()
+        self.video_source = f"rtsp://{ip_address}/..."  # Update with your camera's stream URL
 
-    if not cap.isOpened():
-        print("Error: Could not open video source.")
-        return
+        self.is_running = True
+        self.capture_thread = threading.Thread(target=self.capture_video)
+        self.capture_thread.start()
 
-    while True:
-        # Capture a frame from the camera
-        ret, frame = cap.read()
+    def stop_camera(self):
+        self.is_running = False
 
-        if not ret:
-            print("Error: Cannot read frame.")
-            break
+    def capture_video(self):
+        cap = cv2.VideoCapture(self.video_source)
 
-        # Detect GPM in the current frame
-        processed_frame, max_val = locate_gpm_in_frame(frame, gpm_gray)
+        while self.is_running:
+            ret, frame = cap.read()
+            if ret:
+                # Convert OpenCV frame to PIL image
+                cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(cv2image)
+                img = img.resize((640, 480), Image.LANCZOS)
+                self.photo = ImageTk.PhotoImage(img)
 
-        # Display the frame with detection
-        cv2.imshow('GPM Detection', processed_frame)
+                # Update the video label
+                self.video_label.config(image=self.photo)
+                self.video_label.image = self.photo
 
-        # Print confidence score
-        if max_val < 0.7:
-            print("Low confidence: Detection might be NG")
+        cap.release()
 
-        # Exit the loop when 'q' is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    def on_closing(self):
+        self.stop_camera()
+        self.master.destroy()
 
-    # Release the camera and destroy all windows
-    cap.release()
-    cv2.destroyAllWindows()
-
-if __name__ == '__main__':
-    main()
+# Create and run the GUI
+root = tk.Tk()
+app = CameraApp(root)
+root.mainloop()

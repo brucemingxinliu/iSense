@@ -6,8 +6,14 @@ Licensed under keySense LLC 祁新科技有限公司 \
 Author Bruce Liu\
 Date: 2024/12/06
 ## Requirements
-OpenCV libraries 
-Numpy
+OpenCV libraries\ 
+Numpy\
+For the demo purpose, we use Basler Camera\
+pip install pypylon\
+pip install plylon\
+pip install PyQT6\
+
+Visit https://www.baslerweb.com/en/products/software/pylon-vision-sdk/ to download SDK\
 
 ## System Overview
 ```mermaid
